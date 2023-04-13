@@ -73,7 +73,7 @@ window.addEventListener('load', function() {
         if(nameMonster !== null && nameMonster.trim() !== '')
             return nameMonster
         else
-            return 'Monster'
+            return 'Le monstre'
     }
 
     /**
