@@ -23,12 +23,15 @@ window.addEventListener('load', function() {
 
     let newLife = document.getElementById('b1')
     let kill = document.getElementById('k')
+    let theme = document.getElementById('theme')
 
     // Composants du fichier html
     let actionBox = document.getElementById('actionbox')
     let status = document.getElementById('status')
     let monster = document.getElementById('monster')
     let healthBar = document.getElementById('health-bar')
+
+    let body = document.getElementsByTagName('body')[0]
 
     // Liste des actions du monstre
     let actions = [
@@ -162,6 +165,15 @@ window.addEventListener('load', function() {
 
         // Epaisseur de la bordure du monstre en fonction de argent
         monster.style.borderWidth = `${money / 10}px`
+    }
+
+    /**
+     * Change le thème du site
+     */
+    function changeTheme(){
+        body.classList.toggle('dark-theme')
+        theme.classList.toggle('light')
+        theme.classList.toggle('dark')
     }
 
     // ###################################
@@ -357,6 +369,7 @@ window.addEventListener('load', function() {
 
     newLife.addEventListener('click', newLifeAction)
     kill.addEventListener('click', killAction)
+    theme.addEventListener('click', changeTheme)
 
     // ######################
     // # Fonction aléatoire #

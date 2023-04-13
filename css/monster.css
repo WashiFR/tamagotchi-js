@@ -1,11 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
+:root{
+    --border-color: black;
+}
+
 /* Page HTML */
 
 *{
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
+}
+
+/* Dark theme */
+
+.dark-theme{
+    background-color: #222;
+    color: #f5f5f5;
+    --border-color: #f5f5f5;
 }
 
 /* Titre */
@@ -20,6 +32,67 @@ h1 {
 @media screen and (max-width: 1024px) {
     h1 {
         padding: 0rem;
+    }
+}
+
+/* Informations sur le monstre */
+
+div.monster-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+div.monster {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 100px;
+    margin: 10px;
+}
+
+#monster {
+    border-radius: 5px;
+    background-color: orange;
+    border-width: 0px;
+    border-style: solid;
+    border-color: var(--border-color);
+    width: 100px;
+}
+
+#monster > p {
+    text-align: center;
+    color: black;
+}
+
+#actionbox {
+    border: 1px solid grey;
+    width: 500px;
+    overflow: auto;
+}
+
+#actionbox > p {
+    margin-left: 10px;
+}
+
+ul#status {
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+    list-style: none;
+}
+
+ul#status li {
+    font-size: x-large;
+    padding: 10px;
+}
+
+/* Responsive Informations */
+
+@media screen and (max-width: 1024px) {
+    div.monster-container {
+        gap: 0;
     }
 }
 
@@ -87,80 +160,18 @@ progress::-webkit-progress-value{
     }
 }
 
-/* Informations sur le monstre */
-
-div.monster-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-div.monster {
-    display: inline-block;
-    box-sizing: border-box;
-    height: 100px;
-    margin: 10px;
-}
-
-#monster {
-    border-radius: 5px;
-    background-color: orange;
-    border-width: 0px;
-    border-style: solid;
-    border-color: black;
-    width: 100px;
-}
-
-#monster > p {
-    text-align: center;
-}
-
-#actionbox {
-    border: 1px solid grey;
-    width: 500px;
-    overflow: auto;
-}
-
-#actionbox > p {
-    margin-left: 10px;
-}
-
-ul#status {
-    display: flex;
-    justify-content: center;
-    gap: 5%;
-    list-style: none;
-}
-
-ul#status li {
-    font-size: x-large;
-    padding: 10px;
-}
-
-/* Responsive Informations */
-
-@media screen and (max-width: 1024px) {
-    div.monster-container {
-        gap: 0;
-    }
-}
-
 /* Boutons */
 
 div.action-button-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     flex-wrap: wrap;
     padding: 10px;
 }
 
-button.action,
-button.life-action,
-button.kill-action {
+button {
     border: none;
     padding: 1rem;
     font-size: 1rem;
@@ -197,6 +208,28 @@ button.kill-action {
 
 button.kill-action:active {
     box-shadow: 0 0.2rem darkred;
+    transform: translateY(0.2rem);
+}
+
+button.light{
+    background-color: #f5f5f5;
+    color: black;
+    box-shadow: 0 0.4rem #ccc;
+}
+
+button.light:active {
+    box-shadow: 0 0.2rem #ccc;
+    transform: translateY(0.2rem);
+}
+
+button.dark{
+    background-color: #222;
+    color: #f5f5f5;
+    box-shadow: 0 0.4rem #000;
+}
+
+button.dark:active {
+    box-shadow: 0 0.2rem #000;
     transform: translateY(0.2rem);
 }
 

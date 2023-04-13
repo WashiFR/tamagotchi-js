@@ -5,11 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>JS Monster</title>
+        <!-- Import du CSS -->
         <link rel="stylesheet" href="css/monster.css"/>
     </head>
     <body>
         <h1>La vie et la mort d'un pauvre monstre...</h1>
         
+        <!-- Information des actions du monstre -->
         <div class="monster-container">
             <div id="monster" class="monster">
                 <p>Monster</p>
@@ -19,17 +21,20 @@
             </div>
         </div>
 
+        <!-- Barre de vie du monstre -->
         <label id="progress-bar">
-            ❤️ Health ❤️
+            Health ❤️
             <progress max="100" value="100" id="health-bar"></progress>
         </label>
 
+        <!-- Stats du monstre -->
         <ul id="status">
             <li>Life : 0</li>
             <li>Money : 0</li>
             <li>Awake</li>
         </ul>
 
+        <!-- Boutons d'actions du monstre -->
         <div class="action-button-container">
             <button id="b2" class="action">Run</button>
             <button id="b3" class="action">Fight</button>
@@ -39,11 +44,14 @@
             <button id="b6" class="action">Show</button>
         </div>
 
+        <!-- Boutons d'actions -->
         <div class="action-button-container">
             <button id="b1" class="life-action">New life</button>
-            <button id="k"  class="kill-action">Kill</button>
+            <button id="k" class="kill-action">Kill</button>
+            <button id="theme" class="dark">Change theme</button>
         </div>
 
+        <!-- Import du Javascript -->
         <script src="js/monster.js"></script>
     </body>
 </html>
