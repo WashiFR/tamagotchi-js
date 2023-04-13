@@ -28,6 +28,7 @@ window.addEventListener('load', function() {
     let actionBox = document.getElementById('actionbox')
     let status = document.getElementById('status')
     let monster = document.getElementById('monster')
+    let healthBar = document.getElementById('health-bar')
 
     // Liste des actions du monstre
     let actions = [
@@ -106,6 +107,9 @@ window.addEventListener('load', function() {
     function displayStatus(life, money, awake){
         let emoji = ''
 
+        // Reset la couleur de la barre de vie
+        healthBar.className = ''
+
         // Change la couleur et l'emoji du monstre en fonction de la vie
         if(life <= 0){
             monster.style.backgroundColor = '#555555'
@@ -113,34 +117,42 @@ window.addEventListener('load', function() {
         }
         else if(life <= 5){
             monster.style.backgroundColor = '#aa0000'
-            emoji = '😡'
+            healthBar.className = 'progress-dark-red'
+            emoji = '😰'
         }
         else if(life <= 20){
             monster.style.backgroundColor = '#ff0000'
-            emoji = '😠'
+            healthBar.className = 'progress-red'
+            emoji = '😨'
         }
         else if(life <= 35){
             monster.style.backgroundColor = '#ff5500'
-            emoji = '☹️'
+            healthBar.className = 'progress-dark-orange'
+            emoji = '😟'
         }
         else if(life <= 50){
             monster.style.backgroundColor = '#ffaa00'
-            emoji = '😥'
+            healthBar.className = 'progress-orange'
+            emoji = '☹️'
         }
         else if(life <= 65){
             monster.style.backgroundColor = '#ffff00'
+            healthBar.className = 'progress-yellow'
             emoji = '😐'
         }
         else if(life <= 80){
             monster.style.backgroundColor = '#aaff00'
+            healthBar.className = 'progress-light-green'
             emoji = '🙂'
         }
         else{
             monster.style.backgroundColor = '#00ff00'
+            healthBar.className = 'progress-green'
             emoji = '😃'
         }
 
         // Affiche les attributs du monstre dans la boite de status
+        healthBar.value = life
         status.children[0].innerHTML = `❤️: ${life}/${maxLife}`
         status.children[1].innerHTML = `💰: ${money}`
         if(!awake)
@@ -227,6 +239,8 @@ window.addEventListener('load', function() {
         life += amount
         if(life > maxLife)
             life = maxLife
+
+        healthBar.value = life
     }
 
     /**
@@ -326,7 +340,7 @@ window.addEventListener('load', function() {
      * Tue le monstre
      */
     function killAction(){
-        life = 0
+        heal(-life)
         log(`${name} est mort`)
         displayStatus(life, money, awake)
     }

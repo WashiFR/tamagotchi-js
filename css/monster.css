@@ -23,6 +23,70 @@ h1 {
     }
 }
 
+/* Barre de vie */
+
+#progress-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    font-weight: bold;
+    gap: 10px;
+}
+
+#health-bar{
+    appearance: none;
+    height: 15px;
+    width: 50%;
+}
+
+progress::-webkit-progress-bar{
+    background-color: gray;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value{
+    background-color: #00ff00;
+    border-radius: 10px;
+}
+
+.progress-dark-red::-webkit-progress-value{
+    background-color: #aa0000;
+}
+
+.progress-red::-webkit-progress-value{
+    background-color: #ff0000;
+}
+
+.progress-dark-orange::-webkit-progress-value{
+    background-color: #ff5500;
+}
+
+.progress-orange::-webkit-progress-value{
+    background-color: #ffaa00;
+}
+
+.progress-yellow::-webkit-progress-value{
+    background-color: #ffff00;
+}
+
+.progress-light-green::-webkit-progress-value{
+    background-color: #aaff00;
+}
+
+.progress-green::-webkit-progress-value{
+    background-color: #00ff00;
+}
+
+/* Responsive Barre de vie */
+
+@media screen and (max-width: 1024px) {
+    #health-bar{
+        width: 80%;
+    }
+}
+
 /* Informations sur le monstre */
 
 div.monster-container {
