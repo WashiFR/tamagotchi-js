@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+/* Page HTML */
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Titre */
+
+h1 {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Responsive Titre */
+
+@media screen and (max-width: 1024px) {
+    h1 {
+        padding: 0rem;
+    }
+}
+
+/* Informations sur le monstre */
+
+div.monster-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+div.monster {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 100px;
+    margin: 10px;
+}
+
+#monster {
+    border-radius: 5px;
+    background-color: orange;
+    border-width: 0px;
+    border-style: solid;
+    border-color: black;
+    width: 100px;
+}
+
+#monster > p {
+    text-align: center;
+}
+
+#actionbox {
+    border: 1px solid grey;
+    width: 500px;
+    overflow: auto;
+}
+
+#actionbox > p {
+    margin-left: 10px;
+}
+
+ul#status {
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+    list-style: none;
+}
+
+ul#status li {
+    font-size: x-large;
+    padding: 10px;
+}
+
+/* Responsive Informations */
+
+@media screen and (max-width: 1024px) {
+    div.monster-container {
+        gap: 0;
+    }
+}
+
+/* Boutons */
+
+div.action-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+button.action,
+button.life-action,
+button.kill-action {
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    width: 10em;
+    border-radius: 1rem;
+    color: white;
+    cursor: pointer;
+}
+
+button.action {
+    background-color: deepskyblue;
+    box-shadow: 0 0.4rem dodgerblue;
+}
+
+button:active {
+    box-shadow: 0 0.2rem dodgerblue;
+    transform: translateY(0.2rem);
+}
+
+button.life-action {
+    background-color: limegreen;
+    box-shadow: 0 0.4rem green;
+}
+
+button.life-action:active {
+    box-shadow: 0 0.2rem darkgreen;
+    transform: translateY(0.2rem);
+}
+
+button.kill-action {
+    background-color: red;
+    box-shadow: 0 0.4rem darkred;
+}
+
+button.kill-action:active {
+    box-shadow: 0 0.2rem darkred;
+    transform: translateY(0.2rem);
+}
+
+/* Responsive Boutons */
+
+@media screen and (max-width: 1024px) {
+    div.action-button-container {
+        gap: 20px;
+    }
+}
