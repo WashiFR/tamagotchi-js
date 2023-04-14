@@ -134,7 +134,7 @@ window.addEventListener('load', () => {
         status.children[0].innerHTML = `❤️: ${life}/${maxLife}`
         status.children[1].textContent = `💰: ${money}`
         
-        if(!awake)
+        if(!isAwake())
             status.children[2].innerHTML = `😴`
 
         // Epaisseur de la bordure du monstre en fonction de argent
