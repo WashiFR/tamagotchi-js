@@ -46,26 +46,36 @@ div.monster-container {
 }
 
 div.monster {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
-    height: 100px;
+    height: 120px;
     margin: 10px;
 }
 
 #monster {
+    justify-content: space-between;
+    align-items: center;
     border-radius: 5px;
-    background-color: orange;
-    border-width: 0px;
+    border-width: 1px;
     border-style: solid;
     border-color: var(--border-color);
     width: 100px;
+}
+
+#monster > span {
+    text-align: center;
+    color: black;
     background-image: url('../img/default.png');
     background-size: cover;
+    height: 100%;
+    width: 100%;
 }
 
 #monster > p {
+    width: 100%;
     text-align: center;
-    color: black;
+    border-top: 1px solid var(--border-color);
 }
 
 #actionbox {
@@ -240,5 +250,12 @@ button.dark:active {
 @media screen and (max-width: 1024px) {
     div.action-button-container {
         gap: 20px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    button{
+        width: 5em;
+        padding: 0.5rem;
     }
 }

@@ -80,7 +80,7 @@ window.addEventListener('load', () => {
 
         init(nameMonster, maxLife, 0)
 
-        monster.firstElementChild.innerHTML = nameMonster
+        monster.ele
         healthBar.max = maxLife
 
         displayStatus(life, money, awake)
@@ -112,6 +112,7 @@ window.addEventListener('load', () => {
         // Change la couleur et l'emoji du monstre en fonction de sa vie
         if(life <= 0){
             updateStatus('grey', '', '💀')
+            log(`${name} est mort`)
             awake = true
         }
         else if(life <= maxLife * 0.1)
@@ -138,7 +139,9 @@ window.addEventListener('load', () => {
             status.children[2].innerHTML = `😴`
 
         // Epaisseur de la bordure du monstre en fonction de argent
-        monster.style.borderWidth = `${money / 10}px`
+        monster.style.borderWidth = `${money / 5}px`
+        if(money < 5)
+            monster.style.borderWidth = '1px'
     }
 
     // #######################
@@ -182,7 +185,7 @@ window.addEventListener('load', () => {
      * @param {string} emoji emoji à afficher dans la boite de status
      */
     function updateStatus(color, className, emoji){
-        monster.style.backgroundColor = color
+        // monster.style.backgroundColor = color
         healthBar.className = className
         status.children[2].innerHTML = emoji
     }
@@ -231,7 +234,7 @@ window.addEventListener('load', () => {
      * @returns {boolean} true si le monstre a assez de vie, false sinon
      */
     function haveEnoughLife(amount){
-        return life > amount
+        return life >= amount
     }
 
     /**
