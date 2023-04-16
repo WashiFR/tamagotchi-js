@@ -48,13 +48,13 @@ div.monster-container {
 div.monster {
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     height: 120px;
     margin: 10px;
 }
 
 #monster {
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     border-radius: 5px;
     border-width: 1px;
@@ -63,17 +63,14 @@ div.monster {
     width: 100px;
 }
 
-#monster > span {
-    text-align: center;
-    color: black;
-    background-image: url('../img/default.png');
-    background-size: cover;
-    height: 100%;
+#monster > img {
     width: 100%;
+    overflow: hidden;
 }
 
 #monster > p {
     width: 100%;
+    height: auto;
     text-align: center;
     border-top: 1px solid var(--border-color);
 }
@@ -187,6 +184,7 @@ button {
     border: none;
     padding: 1rem;
     font-size: 1rem;
+    font-weight: bold;
     width: 10em;
     border-radius: 1rem;
     color: white;
@@ -255,7 +253,7 @@ button.dark:active {
 
 @media screen and (max-width: 540px) {
     button{
-        width: 5em;
+        width: 6em;
         padding: 0.5rem;
     }
 }

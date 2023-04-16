@@ -76,11 +76,11 @@ window.addEventListener('load', () => {
     function go(){
         assignActions()
 
-        let nameMonster = nameTheMonster()
+        let nameMonster = nameTheMonster('Quel est le nom de votre monstre ?')
 
         init(nameMonster, maxLife, 0)
 
-        monster.ele
+        monster.children[1].innerHTML = nameMonster
         healthBar.max = maxLife
 
         displayStatus(life, money, awake)
@@ -111,24 +111,24 @@ window.addEventListener('load', () => {
 
         // Change la couleur et l'emoji du monstre en fonction de sa vie
         if(life <= 0){
-            updateStatus('grey', '', '💀')
+            updateStatus('', '💀')
             log(`${name} est mort`)
             awake = true
         }
         else if(life <= maxLife * 0.1)
-            updateStatus('#aa0000', 'progress-dark-red', '😰')
+            updateStatus('progress-dark-red', '😰')
         else if(life <= maxLife * 0.2)
-            updateStatus('#ff0000', 'progress-red', '😨')
+            updateStatus('progress-red', '😨')
         else if(life <= maxLife * 0.4)
-            updateStatus('#ff5500', 'progress-dark-orange', '😟')
+            updateStatus('progress-dark-orange', '😟')
         else if(life <= maxLife * 0.5)
-            updateStatus('#ffaa00', 'progress-orange', '☹️')
+            updateStatus('progress-orange', '☹️')
         else if(life <= maxLife * 0.6)
-            updateStatus('#ffff00', 'progress-yellow', '😐')
+            updateStatus('progress-yellow', '😐')
         else if(life <= maxLife * 0.8)
-            updateStatus('#aaff00', 'progress-light-green', '🙂')
+            updateStatus('progress-light-green', '🙂')
         else
-            updateStatus('#00ff00', 'progress-green', '😃')
+            updateStatus('progress-green', '😃')
 
         // Affiche les attributs du monstre dans la boite de status
         healthBar.value = life
@@ -152,12 +152,14 @@ window.addEventListener('load', () => {
      * Permet de donner un nom au monstre
      * @returns {string} le nom du monstre entré par l'utilisateur ou 'Monster' si le nom est vide
      */
-    function nameTheMonster(){
-        let nameMonster = prompt('Quel est le nom de votre monstre ?')
+    function nameTheMonster(message){
+        let nameMonster = prompt(message)
         
         // Vérifie si le nom du monstre n'est pas vide et ne contient pas que des espaces
-        if(nameMonster !== null && nameMonster.trim() !== '')
+        if(nameMonster !== null && nameMonster.trim() !== '' && nameMonster.length <= 10)
             return nameMonster
+        else if(nameMonster !== null && nameMonster.trim() !== '' && nameMonster.length > 10)
+            nameTheMonster('Le nom du monstre ne doit pas dépasser 10 caractères.\nQuel est le nom de votre monstre ?')
         else
             return 'Le monstre'
     }
@@ -184,8 +186,7 @@ window.addEventListener('load', () => {
      * @param {string} className nom de la classe de la barre de vie
      * @param {string} emoji emoji à afficher dans la boite de status
      */
-    function updateStatus(color, className, emoji){
-        // monster.style.backgroundColor = color
+    function updateStatus(className, emoji){
         healthBar.className = className
         status.children[2].innerHTML = emoji
     }
