@@ -11,11 +11,17 @@ window.addEventListener('load', () => {
     const sleepDuration = 7
     const randomDelay = 12
 
+    const maxRest = 20
+    const maxHunger = 20
+
     // Attributs du monstre
     let name = ''
     let life = maxLife
     let money = 0
     let awake = true
+
+    let rest = maxRest
+    let hunger = maxHunger
 
     // Méthodes du monstre
     let run = document.getElementById('b2')
@@ -31,9 +37,14 @@ window.addEventListener('load', () => {
 
     // Composants du fichier html
     let actionBox = document.getElementById('actionbox')
-    let status = document.getElementById('status')
+    let statsLife = document.getElementById('life')
+    let statsMoney = document.getElementById('money')
+    let statsAwake = document.getElementById('awake')
+    let statsRest = document.getElementById('rest')
     let monster = document.getElementById('monster')
+
     let healthBar = document.getElementById('health-bar')
+    let restBar = document.getElementById('rest-bar')
 
     let body = document.getElementsByTagName('body')[0]
 
@@ -56,18 +67,22 @@ window.addEventListener('load', () => {
      * @param {number} l vie du monstre
      * @param {number} m argent du monstre
      */
-    function init(n, l, m) {
+    function init(n, l, m, r) {
         name = n
         life = l
         money = m
+        rest = r
     }
 
     /**
      * Affiche les attributs du monstre dans la boite d'action
      */
     function showme(){
-        log(`Life : ${life} / Money : ${money} / Awake : ${awake}`)
-        // displayStatus(life, money, awake)
+        let emoji = '❌'
+        if(isAwake())
+            emoji = '✅'
+
+        log(`❤️: ${life}/${maxLife} | 💰: ${money} | Awake : ${emoji} | 💤: ${rest}/${maxRest}`)
     }
 
     /**
@@ -78,12 +93,16 @@ window.addEventListener('load', () => {
 
         let nameMonster = nameTheMonster('Quel est le nom de votre monstre ?')
 
-        init(nameMonster, maxLife, 0)
+        while(nameMonster === '')
+            nameMonster = nameTheMonster('Le nom de votre monstre doit faire moins de 10 caractères.\nQuel est le nom de votre monstre ?')
+
+        init(nameMonster, maxLife, 0, maxRest)
 
         monster.children[1].innerHTML = nameMonster
         healthBar.max = maxLife
+        restBar.max = maxRest
 
-        displayStatus(life, money, awake)
+        displayStatus(life, money, awake, rest)
 
         // Exécution de la fonction aléatoire toutes les 12 secondes
         setInterval(hasard, randomDelay * 1000)
@@ -105,14 +124,24 @@ window.addEventListener('load', () => {
      * @param {number} money argent du monstre
      * @param {boolean} awake etat du monstre
      */
-    function displayStatus(life, money, awake){
+    function displayStatus(life, money, awake, rest){
         // Reset la couleur de la barre de vie
         healthBar.className = ''
 
+        // Fait perdre de la vie au monstre si il n'a plus d'énergie
+        if(rest <= 0){
+            heal(-5)
+            log(`${name} n'a plus d'énergie [-5 ❤️]`)
+        }
+
         // Change la couleur et l'emoji du monstre en fonction de sa vie
         if(life <= 0){
+            if(rest <= 0)
+                log(`${name} est mort de fatigue`)
+            else
+                log(`${name} est mort`)
+
             updateStatus('', '💀')
-            log(`${name} est mort`)
             awake = true
         }
         else if(life <= maxLife * 0.1)
@@ -132,11 +161,11 @@ window.addEventListener('load', () => {
 
         // Affiche les attributs du monstre dans la boite de status
         healthBar.value = life
-        status.children[0].innerHTML = `❤️: ${life}/${maxLife}`
-        status.children[1].textContent = `💰: ${money}`
+        statsMoney.textContent = `💰: ${money}`
+        restBar.value = rest
         
         if(!isAwake())
-            status.children[2].innerHTML = `😴`
+            statsAwake.textContent = `😴`
 
         // Epaisseur de la bordure du monstre en fonction de argent
         monster.style.borderWidth = `${money / 5}px`
@@ -159,7 +188,7 @@ window.addEventListener('load', () => {
         if(nameMonster !== null && nameMonster.trim() !== '' && nameMonster.length <= 10)
             return nameMonster
         else if(nameMonster !== null && nameMonster.trim() !== '' && nameMonster.length > 10)
-            nameTheMonster('Le nom du monstre ne doit pas dépasser 10 caractères.\nQuel est le nom de votre monstre ?')
+            return ''
         else
             return 'Le monstre'
     }
@@ -188,7 +217,7 @@ window.addEventListener('load', () => {
      */
     function updateStatus(className, emoji){
         healthBar.className = className
-        status.children[2].innerHTML = emoji
+        statsAwake.textContent = emoji
     }
 
     /**
@@ -239,12 +268,21 @@ window.addEventListener('load', () => {
     }
 
     /**
+     * Permet de savoir si le monstre a assez de repos
+     * @param {number} amount 
+     * @returns true si le monstre a assez de repos, false sinon
+     */
+    function haveEnoughRest(amount){
+        return rest >= amount
+    }
+
+    /**
      * Permet de savoir si le monstre peut faire une action
      * @param {number} lifeAmount montant des pv à vérifier
      * @param {number} priceAmount montant du prix à vérifier 
      * @returns {boolean} true si le monstre peut faire l'action, false sinon
      */
-    function canDoAction(lifeAmount, priceAmount){
+    function canDoAction(lifeAmount, restAmount, priceAmount){
         let canDo = true
 
         if(!isAlive()){
@@ -257,6 +295,10 @@ window.addEventListener('load', () => {
         }
         else if(!haveEnoughLife(lifeAmount)){
             log(`${name} n'a plus assez de vie pour faire cette action`)
+            canDo = false
+        }
+        else if(!haveEnoughRest(restAmount)){
+            log(`${name} est trop fatigué pour faire cette action`)
             canDo = false
         }
         else if(!haveEnoughMoney(priceAmount)){
@@ -280,62 +322,83 @@ window.addEventListener('load', () => {
     }
 
     /**
+     * Permet au monstre de se reposer
+     * @param {number} amount 
+     */
+    function repose(amount){
+        rest += amount
+        if(rest > maxRest)
+            rest = maxRest
+
+        restBar.value = rest
+    }
+
+    /**
      * Fait courir le monstre
      * Fait perdre 1 de vie au monstre
+     * Fait perdre 1 de repos au monstre
      */
     function runAction(){
-        if(!canDoAction(1, 0))
+        if(!canDoAction(1, 1, 0))
             return
         
         heal(-1)
-        log(`${name} court [-1 ❤️]`)
-        displayStatus(life, money, awake)
+        repose(-1)
+        log(`${name} court [-1 ❤️ | -1 💤]`)
+        displayStatus(life, money, awake, rest)
     }
 
     /**
      * Fait combattre le monstre
      * Fait perdre 3 de vie au monstre
+     * Fait perdre 2 de repos au monstre
      */
     function fightAction(){
-        if(!canDoAction(3, 0))
+        if(!canDoAction(3, 2, 0))
             return
 
         heal(-3)
-        log(`${name} combat [-3 ❤️]`)
-        displayStatus(life, money, awake)
+        repose(-2)
+        log(`${name} combat [-3 ❤️ | -2 💤]`)
+        displayStatus(life, money, awake, rest)
     }
 
     /**
      * Fait travailler le monstre
      * Fait gagner 2 d'argent au monstre et lui fait perdre 1 de vie
+     * Fait perdre 4 de repos au monstre
      */
     function workAction(){
-        if(!canDoAction(1, 0))
+        if(!canDoAction(1, 4, 0))
             return
 
         heal(-1)
+        repose(-4)
         money += 2
-        log(`${name} travaille [-1 ❤️ | +2 💰]`)
-        displayStatus(life, money, awake)
+        log(`${name} travaille [-1 ❤️ | +2 💰 | -4 💤]`)
+        displayStatus(life, money, awake, rest)
     }
 
     /**
      * Fait manger le monstre
      * Fait gagner 2 de vie au monstre et lui fait perdre 3 d'argent
+     * Fait gagner 1 de repos au monstre
      */
     function eatAction(){
-        if(!canDoAction(0, 3))
+        if(!canDoAction(0, 0, 3))
             return
 
         heal(2)
+        repose(1)
         money -= 3
-        log(`${name} mange [+2 ❤️ | -3 💰]`)
-        displayStatus(life, money, awake)
+        log(`${name} mange [+2 ❤️ | -3 💰 | +1 💤]`)
+        displayStatus(life, money, awake, rest)
     }
 
     /**
      * Réveille le monstre
      * Fait gagner 1 de vie au monstre
+     * Fait gagner 10 de repos au monstre
      */
     function awakeAction(){
         // Empêche le monstre de réscuciter si il est tué pendant son sommeil
@@ -345,21 +408,22 @@ window.addEventListener('load', () => {
         }
 
         heal(1)
+        repose(10)
         awake = true
-        log(`${name} se réveille [+1 ❤️]`)
-        displayStatus(life, money, awake)
+        log(`${name} se réveille [+1 ❤️ | +10 💤]`)
+        displayStatus(life, money, awake, rest)
     }
 
     /**
      * Fait dormir le monstre pendant 7 secondes
      */
     function sleepAction(){
-        if(!canDoAction(0, 0))
+        if(!canDoAction(0, 0, 0))
             return
 
         awake = false
         log(`${name} dort`)
-        displayStatus(life, money, awake)
+        displayStatus(life, money, awake, rest)
 
         timer = setTimeout(awakeAction, sleepDuration * 1000)
     }
@@ -373,9 +437,9 @@ window.addEventListener('load', () => {
             return
         }
         
-        init(name, maxLife, 0)
+        init(name, maxLife, 0, maxRest)
         log(`${name} a trouvé une nouvelle vie`)
-        displayStatus(life, money, awake)
+        displayStatus(life, money, awake, rest)
     }
 
     /**
@@ -388,8 +452,9 @@ window.addEventListener('load', () => {
         }
 
         heal(-life)
+        repose(-rest)
         log(`${name} est mort dans d'atroces souffrances`)
-        displayStatus(life, money, awake)
+        displayStatus(life, money, awake, rest)
     }
 
     // ######################

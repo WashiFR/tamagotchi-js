@@ -88,20 +88,45 @@ div.monster {
 ul#status {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 5%;
     list-style: none;
+    padding: 10px;
 }
 
 ul#status li {
     font-size: x-large;
-    padding: 10px;
+}
+
+#rest-bar{
+    appearance: none;
+    height: 15px;
+    width: 200px;
+}
+
+#rest-bar::-webkit-progress-bar{
+    background-color: gray;
+    border-radius: 10px;
+}
+
+#rest-bar::-webkit-progress-value{
+    background-color: #00aaff;
+    border-radius: 10px;
 }
 
 /* Responsive Informations */
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 540px) {
     div.monster-container {
         gap: 0;
+    }
+
+    ul#status {
+        padding-top: 0;
+    }
+
+    ul#status li {
+        padding: 0 15px;
     }
 }
 
@@ -111,7 +136,6 @@ ul#status li {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     font-size: 1.5rem;
     font-weight: bold;
     gap: 10px;
@@ -123,12 +147,12 @@ ul#status li {
     width: 50%;
 }
 
-progress::-webkit-progress-bar{
+#health-bar::-webkit-progress-bar{
     background-color: gray;
     border-radius: 10px;
 }
 
-progress::-webkit-progress-value{
+#health-bar::-webkit-progress-value{
     background-color: #00ff00;
     border-radius: 10px;
 }
