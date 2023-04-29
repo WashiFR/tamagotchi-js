@@ -502,7 +502,6 @@ window.addEventListener('load', () => {
         clearTimeout(timeout)
         heal(-life)
         awake = true
-        log(`${name} est mort dans d'atroces souffrances`)
         displayStatus(life, money, awake, rest, hunger)
     }
 
