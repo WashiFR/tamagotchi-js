@@ -150,17 +150,17 @@ window.addEventListener('load', () => {
         else if(life <= maxLife * 0.1)
             updateStatus('progress-dark-red', '😰')
         else if(life <= maxLife * 0.2)
-            updateStatus('progress-red', '😨')
+            updateStatus('progress-red', '😟')
         else if(life <= maxLife * 0.4)
-            updateStatus('progress-dark-orange', '😟')
+            updateStatus('progress-dark-orange', '☹️')
         else if(life <= maxLife * 0.5)
-            updateStatus('progress-orange', '☹️')
+            updateStatus('progress-orange', '😐')
         else if(life <= maxLife * 0.6)
-            updateStatus('progress-yellow', '😐')
+            updateStatus('progress-yellow', '🙂')
         else if(life <= maxLife * 0.8)
-            updateStatus('progress-light-green', '🙂')
+            updateStatus('progress-light-green', '😃')
         else
-            updateStatus('progress-green', '😃')
+            updateStatus('progress-green', '😁')
 
         // Affiche les attributs du monstre dans la boite de status
         healthBar.value = life
