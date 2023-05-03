@@ -236,6 +236,7 @@ button {
     color: white;
     cursor: pointer;
     transition: 0.24s;
+    -webkit-tap-highlight-color: transparent;
 }
 
 button.action {
