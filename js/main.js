@@ -7,12 +7,12 @@ window.addEventListener('load', () => {
     // ######################
 
     // Constantes du monstre
-    const maxLife = 20
+    const maxLife = 100
     const sleepDuration = 7
     const randomDelay = 12
 
-    const maxRest = 20
-    const maxHunger = 20
+    const maxRest = 100
+    const maxHunger = 100
 
     // Attributs du monstre
     let name = ''
@@ -171,9 +171,9 @@ window.addEventListener('load', () => {
         if(!isAwake() && isAlive())
             statsAwake.textContent = `😴`
 
-        // Epaisseur de la bordure du monstre en fonction de argent
-        monster.style.borderWidth = `${money / 5}px`
-        if(money < 5)
+        // Epaisseur de la bordure du monstre en fonction de l'argent
+        monster.style.borderWidth = `${money / 2}px`
+        if(money < 2)
             monster.style.borderWidth = '1px'
     }
 
@@ -348,7 +348,7 @@ window.addEventListener('load', () => {
         // Fait perdre de la vie au monstre si il n'a plus d'énergie
         if(rest <= 0){
             heal(-5)
-            log(`${name} n'a plus d'énergie [-5 ❤️]`)
+            log(`${name} n'a plus d'énergie 💤 [-5 ❤️]`)
         }
     }
 
@@ -368,7 +368,7 @@ window.addEventListener('load', () => {
         // Fait perdre de la vie au monstre si il meurt de faim
         if(hunger <= 0){
             heal(-5)
-            log(`${name} meurt de faim [-5 ❤️]`)
+            log(`${name} meurt de faim 🍗 [-5 ❤️]`)
         }
     }
 
